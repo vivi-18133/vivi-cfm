@@ -5,9 +5,9 @@ name: Python package
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test ]
   pull_request:
-    branches: [ master ]
+    branches: [ test ]
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: build with pyinstaller
       run: |
-        pyinstaller vivicfm/cfm.py --add-data vivicfm\conf\logging.json;conf --add-data vivicfm\bin\avimetaedit-1.0.2.exe;vivicfm\bin --add-data vivicfm\bin\exiftool-11.94.exe;vivicfm\bin -n cfm --onefile
+        pyinstaller vivicfm/cfm.py --add-data vivicfm/conf/logging.json;conf --add-data vivicfm/bin/avimetaedit-1.0.2.exe;vivicfm/bin --add-data vivicfm/bin/exiftool-11.94.exe;vivicfm/bin -n cfm --onefile
     #- name: Lint with flake8
     #  run: |
     #    # stop the build if there are Python syntax errors or undefined names
