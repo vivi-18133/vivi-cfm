@@ -24,12 +24,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
-      shell: cmd
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         pip install pyinstaller
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: build with pyinstaller
       run: |
         pyinstaller vivicfm/cfm.py --add-data vivicfm/conf/logging.json;conf --add-data vivicfm/bin/avimetaedit-1.0.2.exe;vivicfm/bin --add-data vivicfm/bin/exiftool-11.94.exe;vivicfm/bin -n cfm --onefile
