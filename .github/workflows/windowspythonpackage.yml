@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Python package
+name: Windows Python package
 
 on:
   push:
@@ -27,8 +27,9 @@ jobs:
         pip install flake8 pytest
         pip install pyinstaller
     - name: build with pyinstaller
+      shell: cmd
       run: |
-        pyinstaller vivicfm/cfm.py --add-data vivicfm\conf\logging.json;conf --add-data vivicfm\bin\avimetaedit-1.0.2.exe:vivicfm\bin --add-data vivicfm\bin\exiftool-11.94.exe:vivicfm\bin -n cfm --onefile
+        pyinstaller vivicfm/cfm.py --add-data vivicfm\conf\logging.json;conf --add-data vivicfm\bin\avimetaedit-1.0.2.exe;vivicfm\bin --add-data vivicfm\bin\exiftool-11.94.exe;vivicfm\bin -n cfm --onefile
     - name: Upload generate executable
       uses: actions/upload-artifact@v1
       with:
