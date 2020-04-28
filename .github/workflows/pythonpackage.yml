@@ -32,6 +32,11 @@ jobs:
     - name: build with pyinstaller
       run: |
         pyinstaller vivicfm/cfm.py --add-data vivicfm/conf/logging.json:conf --add-data vivicfm/bin/avimetaedit-1.0.2.exe:vivicfm/bin --add-data vivicfm/bin/exiftool-11.94.exe:vivicfm/bin -n cfm --onefile
+    - name: Upload generate executable
+      uses: actions/upload-artifact@v1
+      with:
+        name: cfm
+        path: dist/cfm
     #- name: Lint with flake8
     #  run: |
     #    # stop the build if there are Python syntax errors or undefined names
