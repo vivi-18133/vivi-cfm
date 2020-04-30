@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python package
+name: Linux Python Application (python 3.8)
 
 on:
   push:
@@ -15,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
 
     steps:
     - uses: actions/checkout@v2
@@ -29,7 +26,7 @@ jobs:
         pip install flake8 pytest
         pip install pyinstaller
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: build with pyinstaller
+    - name: Build with pyinstaller
       run: |
         pyinstaller vivicfm/cfm.py --add-data vivicfm/conf/logging.json:conf --add-data vivicfm/bin/avimetaedit-1.0.2.exe:vivicfm/bin --add-data vivicfm/bin/exiftool-11.94.exe:vivicfm/bin -n cfm --onefile
     - name: Upload generate executable
@@ -37,12 +34,3 @@ jobs:
       with:
         name: cfm
         path: dist/cfm
-    #- name: Lint with flake8
-    #  run: |
-    #    # stop the build if there are Python syntax errors or undefined names
-    #    flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    #    # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-    #    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    #- name: Test with pytest
-    #  run: |
-    #    pytest
