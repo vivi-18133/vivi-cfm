@@ -18,7 +18,7 @@ class ExifTool(object):
     def __init__(self, executable=None, stdout_file_path=None, stderr_file_path=None):
         self.executable = executable
         if self.executable is None:
-            self.executable = CFMResource.cfm_configuration["exiftool"]
+            self.executable = CFMResource.exiftool_executable
         self.process = None
         self.stdout_file = None
         self.stderr_file = None

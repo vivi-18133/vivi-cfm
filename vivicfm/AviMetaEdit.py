@@ -14,7 +14,7 @@ class AviMetaEdit(object):
     def __init__(self, executable=None):
         self.executable = executable
         if self.executable is None:
-            self.executable = CFMResource.cfm_configuration["avimetaedit"]
+            self.executable = CFMResource.avimetaedit_executable
 
     def execute(self, *args):
         result = subprocess.run([self.executable] + list(args), stdout=subprocess.PIPE)
