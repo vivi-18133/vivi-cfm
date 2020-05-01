@@ -1,20 +1,20 @@
 import locale
 import subprocess
 import logging
-from pathlib import Path
+
+from vivicfm.CFMResource import CFMResource
 
 LOGGER = logging.getLogger('cfm')
-THIS_FILE_PATH = Path(__file__).parent
-BIN_PATH = THIS_FILE_PATH / "bin"
-AVI_META_EDIT_EXE = (BIN_PATH / "avimetaedit-1.0.2.exe").resolve()
 
 
 class AviMetaEdit(object):
     NOTHING_TO_DO = "Nothing to do"
     IS_MODIFIED = "Is modified"
 
-    def __init__(self, executable=AVI_META_EDIT_EXE):
+    def __init__(self, executable=None):
         self.executable = executable
+        if self.executable is None:
+            self.executable = CFMResource.cfm_configuration["avimetaedit"]
 
     def execute(self, *args):
         result = subprocess.run([self.executable] + list(args), stdout=subprocess.PIPE)

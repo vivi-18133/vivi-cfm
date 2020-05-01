@@ -1,32 +1,16 @@
 import sys
-import json
 import logging
 import logging.config
 from pathlib import Path
-
 from vivicfm.CFMOutputDirectory import CFMOutputDirectory
+from vivicfm.CFMResource import CFMResource
 from vivicfm.CameraModelProcessor import CameraModelProcessor
 
-THIS_FILE_PATH = Path(__file__).parent
-BASE_OUTPUT_PATH = Path("output")
-LOGGING_CONF_FILE = THIS_FILE_PATH / "conf" / "logging.json"
+BASE_OUTPUT_PATH = Path("cfm-output")
 LOGGER = logging.getLogger('cfm')
 
 
-def configure_logging():
-    with open(LOGGING_CONF_FILE, 'r') as f:
-        log_cfg = json.load(f)
-        logging.config.dictConfig(log_cfg)
-
-
-def execute_program(options):
-    input_dir_path = Path(options[1])
-
-    action = "camera-model-check"
-    if len(options) > 2:
-        action = options[2]
-
-    CFMOutputDirectory.init(BASE_OUTPUT_PATH, input_dir_path)
+def execute_program(input_dir_path, action):
 
     if action == "camera-model-check":
         with CameraModelProcessor(input_dir_path, try_load_cache=True) as cmp:
@@ -37,17 +21,41 @@ def execute_program(options):
         with CameraModelProcessor(input_dir_path, try_load_cache=True) as cmp:
             cmp.revert()
 
-
     # duplicationAnalysis = DuplicationAnalysis(input_dir_path, output_dir_path)
     # duplicationAnalysis.computeDuplicated(print_stats=True, save_results=True)
 
+
+def load_logging():
+    lc = CFMResource.logging_configuration
+    info_file = lc["handlers"]["info_file_handler"]["filename"]
+    error_file = lc["handlers"]["error_file_handler"]["filename"]
+    lc["handlers"]["info_file_handler"]["filename"] = str(CFMOutputDirectory.path / info_file)
+    lc["handlers"]["error_file_handler"]["filename"] = str(CFMOutputDirectory.path / error_file)
+    logging.config.dictConfig(lc)
+
+
 def main():
-    configure_logging()
+
+    if len(sys.argv) <= 1:
+        LOGGER.error("No arguments. At least an input directory is required as first argument")
+        sys.exit(0)
+
+    input_dir_path = Path(sys.argv[1])
+
+    action = "camera-model-check"
+    if len(sys.argv) > 2:
+        action = sys.argv[2]
+
+    CFMOutputDirectory.init(BASE_OUTPUT_PATH, input_dir_path)
+    CFMResource.init()
+    load_logging()
+
     try:
         LOGGER.info("cfm started with options: %s" % " ".join(sys.argv))
-        execute_program(sys.argv)
+        execute_program(input_dir_path, action)
     finally:
         LOGGER.info("cfm ended")
+
 
 if __name__ == '__main__':
     main()

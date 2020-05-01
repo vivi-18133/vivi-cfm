@@ -3,13 +3,9 @@ import json
 import locale
 import logging
 import subprocess
-import time
-from pathlib import Path
+from vivicfm.CFMResource import CFMResource
 
 LOGGER = logging.getLogger('cfm')
-THIS_FILE_PATH = Path(__file__).parent
-BIN_PATH = THIS_FILE_PATH / "bin"
-EXIF_TOOL_EXE = (BIN_PATH / "exiftool-11.94.exe").resolve()
 
 
 class ExifTool(object):
@@ -19,8 +15,10 @@ class ExifTool(object):
     MODEL_METADATA = "Model"
     SENTINEL = "{ready}" + os.linesep
 
-    def __init__(self, executable=EXIF_TOOL_EXE, stdout_file_path=None, stderr_file_path=None):
+    def __init__(self, executable=None, stdout_file_path=None, stderr_file_path=None):
         self.executable = executable
+        if self.executable is None:
+            self.executable = CFMResource.cfm_configuration["exiftool"]
         self.process = None
         self.stdout_file = None
         self.stderr_file = None
