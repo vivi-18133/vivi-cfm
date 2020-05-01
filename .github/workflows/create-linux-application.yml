@@ -26,7 +26,7 @@ jobs:
         pip install pyinstaller
     - name: Build with pyinstaller
       run: |
-        tar xzf vivicfm/bin/Image-ExifTool-11.97.tar.gz
+        tar xzf vivicfm/bin/Image-ExifTool-11.97.tar.gz -C vivicfm/bin
         mv vivicfm/conf/cfm-linux.json vivicfm/conf/cfm.json
         pyinstaller vivicfm/cfm.py --add-data vivicfm/conf/cfm.json:conf --add-data vivicfm/conf/logging.json:conf --add-binary vivicfm/bin/Image-ExifTool-11.97:vivicfm/bin --add-binary vivicfm/bin/avimetaedit-1.0.2:vivicfm/bin -n cfm --onefile
     - name: Upload generate executable
