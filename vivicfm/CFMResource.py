@@ -20,10 +20,6 @@ class CFMResource:
             CFMResource.program_path = Path(os.getcwd())
         logging_configuration_file = CFMResource.program_path / "conf" / "logging.json"
         cfm_configuration_file = CFMResource.program_path / "conf" / "cfm.json"
-        for filename in os.listdir(Path(CFMResource.program_path)):
-            print(filename)
-        for filename in os.listdir(Path(CFMResource.program_path) / "bin"):
-            print(filename)
         with open(logging_configuration_file, 'r') as f:
             CFMResource.logging_configuration = json.load(f)
         with open(cfm_configuration_file, 'r') as f:

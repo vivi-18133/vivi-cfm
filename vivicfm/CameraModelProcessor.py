@@ -1,13 +1,11 @@
-import os
 import logging
 from pathlib import Path
-
-from vivicfm.CFMFileRW import CFMFileRW
+from vivicfm.CFMOutputFile import CFMFileRW
 from vivicfm.FoldersMetadata import FoldersMetadata
 from vivicfm.CFMFileList import CFMFileList
 from vivicfm.MetadataManager import MetadataManager
 
-LOGGER = logging.getLogger('cfm')
+LOGGER = logging.getLogger(__name__)
 
 
 class CameraModelProcessor:

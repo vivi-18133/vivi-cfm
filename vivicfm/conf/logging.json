@@ -3,8 +3,8 @@
   "disable_existing_loggers": false,
   "formatters": {
     "console": {
-      "format": "\r[{asctime}] {message:120}",
-	  "style":"{"
+      "format": "[%(asctime)s] %(message)s",
+      "datefmt": "%I:%M:%S"
     },
     "simple": {
       "format": "[%(asctime)s] %(message)s"

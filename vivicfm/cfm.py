@@ -7,7 +7,7 @@ from vivicfm.CFMResource import CFMResource
 from vivicfm.CameraModelProcessor import CameraModelProcessor
 
 BASE_OUTPUT_PATH = Path("cfm-output")
-LOGGER = logging.getLogger('cfm')
+LOGGER = logging.getLogger(__name__)
 
 
 def execute_program(input_dir_path, action):

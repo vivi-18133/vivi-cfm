@@ -1,10 +1,10 @@
+import os
 import json
 import logging
-import os
 
 from vivicfm.CFMOutputDirectory import CFMOutputDirectory
 
-LOGGER = logging.getLogger('cfm')
+LOGGER = logging.getLogger(__name__)
 
 
 class CFMFileRW:
